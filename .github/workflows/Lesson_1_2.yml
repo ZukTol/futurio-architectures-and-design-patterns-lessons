@@ -21,15 +21,15 @@ jobs:
       with:
         dotnet-version: 8.0.x
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore src\Lesson_1_2
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build src\Lesson_1_2 --no-restore
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test src\Lesson_1_2 --no-build --verbosity normal --collect:"XPlat Code Coverage"
     - name: Upload dotnet test results
       uses: actions/upload-artifact@v4
       with:
         name: dotnet-results-8
-        path: TestResults-8
+        path: src\Lesson_1_2\TestResults
       # Use always() to always run this step to publish test results when there are test failures
       if: ${{ always() }}
