@@ -1,3 +1,5 @@
+[![CI-CD]([https://img.shields.io/github/actions/workflow/status/danielpalme/ReportGenerator/ci.yml?style=for-the-badge](https://img.shields.io/github/actions/workflow/status/ZukTol/futurio-architectures-and-design-patterns-lessons/Lesson_1_2.yml))]([https://github.com/danielpalme/ReportGenerator/actions/workflows/ci.yml](https://github.com/ZukTol/futurio-architectures-and-design-patterns-lessons/actions/workflows/Lesson_1_2.yml))
+
 # ДЗ№1 Реализовать движение объектов на игровом поле в рамках подсистемы Игровой сервер.
  
 
