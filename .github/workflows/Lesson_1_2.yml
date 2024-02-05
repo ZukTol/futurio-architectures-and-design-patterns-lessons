@@ -16,34 +16,36 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 8.0.x
+        
     - name: Restore dependencies
       run: dotnet restore src/Lesson_1_2
+      
     - name: Build
       run: dotnet build src/Lesson_1_2 --no-restore
+      
     - name: Test
-      run: dotnet test src/Lesson_1_2 --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory src/Lesson_1_2/TestResults
-    - name: ReportGenerator
-      uses: danielpalme/ReportGenerator-GitHub-Action@5.2.1
+      run: dotnet test src/Lesson_1_2 --no-build --verbosity normal --collect:"XPlat Code Coverage" --results-directory src/Lesson_1_2/Coverage
+    
+    - name: Code Coverage Summary Report
+      uses: irongut/CodeCoverageSummary@v1.3.0
       with:
-        reports: 'src/Lesson_1_2/TestResults/coverage.xml' # REQUIRED # The coverage reports that should be parsed (separated by semicolon). Globbing is supported.
-        targetdir: 'src/Lesson_1_2/TestResults/CoverageReport' # REQUIRED # The directory where the generated report should be saved.
-        reporttypes: 'Html;MarkdownSummaryGithub;Badges ' # The output formats and scope (separated by semicolon) Values: Badges, Clover, Cobertura, OpenCover, CsvSummary, Html, Html_Dark, Html_Light, Html_BlueRed, HtmlChart, HtmlInline, HtmlInline_AzurePipelines, HtmlInline_AzurePipelines_Dark, HtmlInline_AzurePipelines_Light, HtmlSummary, Html_BlueRed_Summary, JsonSummary, CodeClimate, Latex, LatexSummary, lcov, MarkdownSummary, MarkdownSummaryGithub, MarkdownDeltaSummary, MHtml, SvgChart, SonarQube, TeamCitySummary, TextSummary, TextDeltaSummary, Xml, XmlSummary
-        sourcedirs: '' # Optional directories which contain the corresponding source code (separated by semicolon). The source directories are used if coverage report contains classes without path information.
-        historydir: 'src/Lesson_1_2/TestResults/' # Optional directory for storing persistent coverage information. Can be used in future reports to show coverage evolution.
-        verbosity: 'Info' # The verbosity level of the log messages. Values: Verbose, Info, Warning, Error, Off
-        title: 'Lesson 1.2 Coverage' # Optional title.
-        tag: '${{ github.run_number }}_${{ github.run_id }}' # Optional tag or build version.
-        customSettings: '' # Optional custom settings (separated by semicolon). See: https://github.com/danielpalme/ReportGenerator/wiki/Settings.
-        toolpath: 'reportgeneratortool' # Default directory for installing the dotnet tool.
+        filename: 'Coverage/*/coverage.cobertura.xml'
+        badge: true
+        format: 'markdown'
+        output: 'both'
+    
+    - name: Write to Job Summary
+      run: cat code-coverage-results.md >> $GITHUB_STEP_SUMMARY
+    
     - name: Upload dotnet test results
       uses: actions/upload-artifact@v4
       with:
         name: Lesson_1_2
-        path: src/Lesson_1_2/TestResults
+        path: code-coverage-results.md
       # Use always() to always run this step to publish test results when there are test failures
       if: ${{ always() }}
-  
