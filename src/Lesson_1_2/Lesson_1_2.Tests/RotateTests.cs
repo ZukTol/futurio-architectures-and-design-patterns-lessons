@@ -61,4 +61,13 @@ public class RotateTests
 
         Assert.Throws<RotateException>(() => sut.Execute(movableMock.Object));
     }
+
+
+    [Fact]
+    public void Execute_RotatableNull_ThrowsException()
+    {
+        var sut = new Rotate();
+        
+        Assert.Throws<RotateException>(() => sut.Execute(null));
+    }
 }

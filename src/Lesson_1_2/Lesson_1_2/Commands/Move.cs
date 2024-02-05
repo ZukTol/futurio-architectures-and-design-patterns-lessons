@@ -6,11 +6,11 @@ public class Move
 {
     public void Execute(IMovable movable)
     {
-        if(movable == null )
-            ThrowError(new ArgumentNullException(nameof(movable)));
-
         try
         {
+            if (movable == null)
+                ThrowError(new ArgumentNullException(nameof(movable)));
+
             movable.Position += movable.GetVelocity();
         }
         catch (Exception e)

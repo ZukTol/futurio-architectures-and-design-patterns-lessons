@@ -8,11 +8,11 @@ public class Rotate
 {
     public void Execute(IRotatable rotatable)
     {
-        if (rotatable == null)
-            ThrowError(new ArgumentNullException(nameof(rotatable)));
-
         try
         {
+            if (rotatable == null)
+                ThrowError(new ArgumentNullException(nameof(rotatable)));
+
             var angle = rotatable.AngularVelocityRad;
             var x = rotatable.Orientation.X;
             var y = rotatable.Orientation.Y;

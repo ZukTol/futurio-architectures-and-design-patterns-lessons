@@ -59,4 +59,11 @@ public class MoveTests
 
         Assert.Throws<MoveException>(() => sut.Execute(movableMock.Object));
     }
+
+    [Fact]
+    public void Execute_MovableNull_ThrowsException()
+    {
+        var sut = new Move();
+        Assert.Throws<MoveException>(() => sut.Execute(null));
+    }
 }
